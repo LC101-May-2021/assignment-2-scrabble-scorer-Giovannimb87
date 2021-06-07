@@ -117,6 +117,11 @@ function scorerPrompt(
     console.log(`Algorithm Name: ${scoringAlgorithms[scoreChoice].name}`)
     console.log(`Algorithm Description: ${scoringAlgorithms[scoreChoice].description}`)
     return scoringAlgorithms[scoreChoice].scorerFunction(userWord);
+  } else {
+    console.clear();
+    console.log(`Your word is: ${userWord.toUpperCase()}`);
+    console.log(`Selection not found. Please choose again: `);
+    return scorerPrompt();
   }
 }
 
