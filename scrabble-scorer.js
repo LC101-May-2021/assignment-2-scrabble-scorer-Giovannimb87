@@ -77,6 +77,7 @@ return score;
 };
 
 let scrabbleScore = function(word) {
+  word = word.toUpperCase();
   for (let i = 0; i < word.length; i++) {
     for (const letterKey in newPointStructure) {
       if (letterKey.includes(word[i])) {
@@ -119,7 +120,7 @@ function scorerPrompt(
   ) {
     console.log(`Algorithm Name: ${scoringAlgorithms[scoreChoice].name}`)
     console.log(`Algorithm Description: ${scoringAlgorithms[scoreChoice].description}`)
-    return scoringAlgorithms[scoreChoice].scorerFunction(userWord);
+    return scoringAlgorithms[scoreChoice].scoringFunction(userWord);
   } else {
     console.clear();
     console.log(`Your word is: ${userWord.toUpperCase()}`);
@@ -132,7 +133,7 @@ function transform(object) {
   let newObject = {};
   Object.keys(object).forEach((key) => {
     object[key].forEach((character) => {
-      newObject[character.toLowerCase()] = Number(key);
+      newObject[character.toUpperCase()] = Number(key);
     });
   });
   return newObject;
