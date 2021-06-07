@@ -64,6 +64,7 @@ let simpleScore = function (word) {
   for(let i in word) letterPoints += `Points for '${word[i]}': "1"\n`, score++;
 console.log(letterPoints);
 console.log(`Score for ${word}: ${score}`);
+return score;
 };
 
 let vowelBonusScore = function(word) {
@@ -72,6 +73,7 @@ let vowelBonusScore = function(word) {
     word[i].match(/[aeiou]/gi) ? (letterPoints += `Points for '${word[i]}': "3"\n`, score+=3) : (letterPoints += `Points for '${word[i]}': "1"\n`, score++);
 console.log(letterPoints);
 console.log(`Score for ${word}: ${score}`);
+return score;
 };
 
 let scrabbleScore = function(word) {
@@ -85,6 +87,7 @@ let scrabbleScore = function(word) {
   }
 console.log(letterPoints);
 console.log(`Score for ${word}: ${score}`);
+return score;
 }
 const simple = {
   name: 'Simple Score',
