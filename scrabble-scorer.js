@@ -77,7 +77,7 @@ return score;
 };
 
 let scrabbleScore = function(word) {
-  word = word.toUpperCase();
+  word = word.toLowerCase();
   for (let i = 0; i < word.length; i++) {
     for (const letterKey in newPointStructure) {
       if (letterKey.includes(word[i])) {
@@ -133,7 +133,7 @@ function transform(object) {
   let newObject = {};
   Object.keys(object).forEach((key) => {
     object[key].forEach((character) => {
-      newObject[character.toUpperCase()] = Number(key);
+      newObject[character.toLowerCase()] = Number(key);
     });
   });
   return newObject;
