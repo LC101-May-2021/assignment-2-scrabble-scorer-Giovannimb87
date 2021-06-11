@@ -3,8 +3,8 @@
 const input = require("readline-sync");
 let letterPoints = "";
 let userWord;
-let score = 0;
-
+//let totalScore = 0;
+//function to check for illegal characters.
 const isWordValid = function (str) {
   const iChars = "1234567890~`!#$%^&*+=-[]\\';,/{}|\":<>?" + " " + "(" + ")";
 
@@ -15,7 +15,7 @@ const isWordValid = function (str) {
   }
   return true;
 };
-
+//this object will later be transformed using a function that iterates through its key and values in order to re-assign to a new object.
 const oldPointStructure = {
   1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
   2: ['D', 'G'],
@@ -27,6 +27,7 @@ const oldPointStructure = {
 };
 
 function oldScrabbleScorer(word) {
+  let score = 0;
 	word = word.toUpperCase();
 	let letterPoints = "";
  
@@ -43,14 +44,13 @@ function oldScrabbleScorer(word) {
 	}
 console.log(letterPoints);
 console.log(`Score for ${word}: ${score}`);
+return score
  }
 
-// your job is to finish writing these functions and variables that we've named //
-// don't change the names or your program won't work as expected. //
-
+//asks user for a word to be scored.
 function initialPrompt() {
      userWord = input.question("Let's play some scrabble! Enter a word: ");
-
+//checks word for illegal characters and returns true or false. If false, re-prompts the user.
   while (isWordValid(userWord) == false) {
     console.log(
       "Your word can not include spaces, special characters, or numbers."
@@ -58,25 +58,29 @@ function initialPrompt() {
     userWord = input.question("Enter a word: ");
   }
 };
-
+//simple score, iterates through a verified strings index to =+ points to score, and concatinate flavor text into letterpoints variable.
 let simpleScore = function (word) {
+  let score = 0;
   word = word.toUpperCase();
   for(let i in word) letterPoints += `Points for '${word[i]}': "1"\n`, score++;
 console.log(letterPoints);
 console.log(`Score for ${word}: ${score}`);
 return score;
 };
-
+//vowel score, iterates through a verified strings index to check for vowels and then uses a ternary to assign points based on true or false for index match [aeiou], += points to score, accordingly, based on ternary result, and concatinates flavor text into letterpoints variable.
 let vowelBonusScore = function(word) {
+  let score = 0;
   word = word.toUpperCase();
     for(let i in word)
-    word[i].match(/[aeiou]/gi) ? (letterPoints += `Points for '${word[i]}': "3"\n`, score+=3) : (letterPoints += `Points for '${word[i]}': "1"\n`, score++);
+    word[i].match(/[aeiou]/gi) ? (letterPoints += `Points for '${word[i]}': "3"\n`, score+=3) 
+    : (letterPoints += `Points for '${word[i]}': "1"\n`, score++);
 console.log(letterPoints);
 console.log(`Score for ${word}: ${score}`);
 return score;
 };
-
+//original score, iterates through a verified strings index, passes that index value into a for-in loop of an object, checks object for the value of the key which matches the string index value, += points to score accordingly, and concatinates falvor text to letterpoints variable.
 let scrabbleScore = function(word) {
+  let score = 0;
   word = word.toLowerCase();
   for (let i = 0; i < word.length; i++) {
     for (const letterKey in newPointStructure) {
@@ -90,6 +94,8 @@ console.log(letterPoints);
 console.log(`Score for ${word}: ${score}`);
 return score;
 }
+
+//objects that store information about the various scoring algorithms.
 const simple = {
   name: 'Simple Score',
   description: 'Each letter is worth 1 point.',
@@ -108,6 +114,7 @@ const scrabble = {
 
 const scoringAlgorithms = [simple, vowel, scrabble];
 
+//asks the user which scoring algorithm they wish to use, displays information and calls the appropriate object method to score the word.
 function scorerPrompt(
   scoreChoice = input.question(
     "Which scoring system would you like to use?\n0: Simple Scoring\n1: Vowel-Bonus Scoring\n2: Traditional Scoring\n..."
@@ -128,7 +135,7 @@ function scorerPrompt(
     return scorerPrompt();
   }
 }
-
+//function that take an object and reverses the key-value pair so that the values are now the keys, and the original key is set as the value.
 function transform(object) {
   let newObject = {};
   Object.keys(object).forEach((key) => {
@@ -144,10 +151,10 @@ let newPointStructure = transform(oldPointStructure);
 function runProgram() {
   initialPrompt();
   scorerPrompt();
+  //playAgainPrompt();
 }
 
-// Don't write any code below this line //
-// And don't change these or your program will not run as expected //
+
 module.exports = {
    initialPrompt: initialPrompt,
    transform: transform,
